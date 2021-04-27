@@ -1,0 +1,96 @@
+<template>
+  <div>
+    <a-modal
+      :title="operation + title"
+      :visible.sync="isVisible"
+      :confirm-loading="loading"
+      @ok="handleOk"
+      @cancel="handleCancel">
+      <a-form-model
+        ref="form"
+        :model="form"
+        :rules="rules"
+        v-bind="layout">
+        #foreach($field in ${table.fields})
+            #if("$!field.comment" != "")
+          <a-form-model-item label="${field.comment}" prop="${field.propertyName}">
+            <a-input v-model="form.${field.propertyName}" />
+          </a-form-model-item>
+            #end
+        #end
+      </a-form-model>
+    </a-modal>
+  </div>
+</template>
+<script>
+import { save } from '@/api/${table.entityPath}'
+export default {
+  name: '${entity}AddEdit',
+  props: {
+    visible: {
+      type: Boolean,
+      default: false
+    },
+    title: {
+      type: String,
+      default: ''
+    },
+    data: {
+      type: Object,
+      default: () => {}
+    }
+  },
+  data () {
+    return {
+      operation: '',
+      form: {},
+      loading: false,
+      isVisible: false,
+      rules: {
+      },
+      layout: {
+        labelCol: { span: 4 },
+        wrapperCol: { span: 18 }
+      }
+    }
+  },
+  methods: {
+    initData () {
+      this.operation = ''
+      this.loading = false
+      this.form = {}
+    },
+    handleOk () {
+      const message = this.$message
+      const form = this.$refs.form
+      form.validate(valid => {
+        if (valid) {
+          this.loading = true
+          save(this.form).then((res) => {
+            this.isVisible = false
+            message.success(this.operation + '成功')
+            this.$emit('close', true)
+          }).catch(error => {
+            message.error(this.operation + '失败，' + error)
+          }).finally(() => {
+            this.loading = false
+          })
+        }
+      })
+    },
+    handleCancel () {
+      this.$emit('close', false)
+    }
+  },
+  watch: {
+    visible () {
+      this.isVisible = this.visible
+      this.initData()
+      if (this.isVisible) {
+        this.form = this.data
+        this.operation = (this.form && this.form.id && this.form.id !== '' ? '编辑' : '新增')
+      }
+    }
+  }
+}
+</script>

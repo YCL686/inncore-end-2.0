@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ymm.microservices.usercenter.mapper.SysDictMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ymm.microservices.usercenter.entity.SysDict">
+        <id column="id" property="id"/>
+        <result column="dict_name" property="dictName"/>
+        <result column="dict_code" property="dictCode"/>
+        <result column="description" property="description"/>
+        <result column="sort" property="sort"/>
+        <result column="created_time" property="createdTime"/>
+        <result column="updated_time" property="updatedTime"/>
+        <result column="remark" property="remark"/>
+        <result column="deleted" property="deleted"/>
+        <result column="tenant_id" property="tenantId"/>
+    </resultMap>
+
+    <resultMap id="SysDictDtoMap" type="com.ymm.microservices.usercenter.dto.SysDictDto">
+        <id column="id" property="id"/>
+        <result column="dict_name" property="dictName"/>
+        <result column="dict_code" property="dictCode"/>
+        <result column="description" property="description"/>
+        <result column="sort" property="sort"/>
+        <result column="created_time" property="createdTime"/>
+        <result column="updated_time" property="updatedTime"/>
+        <result column="remark" property="remark"/>
+        <collection property="items" column="id" ofType="com.ymm.microservices.usercenter.entity.SysDictItem" select="listDictItemByDictID">
+        </collection>
+    </resultMap>
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, dict_name, dict_code, description, sort, created_time, updated_time, remark, deleted, tenant_id
+    </sql>
+
+
+    <select id="pageSysDictDto" resultMap="SysDictDtoMap">
+        select * from sys_dict ${ew.customSqlSegment}
+    </select>
+    <select id="countSysDictDto" resultType="integer">
+        select count(*) from sys_dict ${ew.customSqlSegment}
+    </select>
+    <select id="listDictItemByDictID" resultType="com.ymm.microservices.usercenter.entity.SysDictItem">
+        select * from sys_dict_item where dict_id = #{id}
+    </select>
+    <select id="getDto" resultMap="SysDictDtoMap">
+        select * from sys_dict ${ew.customSqlSegment}
+    </select>
+</mapper>

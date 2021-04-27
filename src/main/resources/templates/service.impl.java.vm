@@ -1,0 +1,43 @@
+package ${package.ServiceImpl};
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ${package.Entity}.${entity};
+import ${package.Mapper}.${table.mapperName};
+import ${package.Service}.${table.serviceName};
+import ${superServiceImplClassPackage};
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import java.util.List;
+#macro(lowerCase $s)
+    #set ($first=$s.substring(0,1).toLowerCase())
+    #set ($left=$s.substring(1))
+    #set ($firstLower="$first$left")
+#end
+#lowerCase(${table.mapperName})
+/**
+ * <p>
+ * $!{table.comment} 服务实现类
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Service
+public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements ${table.serviceName} {
+    private static Logger log = LoggerFactory.getLogger(${table.serviceImplName}.class);
+#if(!$null.isNull(${foreignKeys})&&$foreignKeys.size()>0)
+    @Autowired
+    private ${table.mapperName} $firstLower;
+
+    @Override
+    public List<${entity}> list${entity}(Wrapper<${entity}> wrapper) {
+        return ${firstLower}.list${entity}(wrapper);
+    }
+    @Override
+    public IPage<${entity}> page${entity}(IPage<${entity}> page, Wrapper<${entity}> wrapper){
+        return ${firstLower}.page${entity}(page, wrapper);
+    }
+#end
+}

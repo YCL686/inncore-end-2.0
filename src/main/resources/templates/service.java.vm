@@ -1,0 +1,21 @@
+package ${package.Service};
+import ${package.Entity}.${entity};
+import ${superServiceClassPackage};
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import java.util.List;
+/**
+ * <p>
+ * $!{table.comment} 服务接口
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+
+public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
+#if(!$null.isNull(${foreignKeys})&&$foreignKeys.size()>0)
+    List<${entity}> list${entity}(Wrapper<${entity}> wrapper);
+    IPage<${entity}> page${entity}(IPage<${entity}> page, Wrapper<${entity}> wrapper);
+#end
+}
