@@ -24,7 +24,6 @@
       :pagination="pagination"
       bordered
       :row-selection="rowSelection"
-      :loading="loading"
       @change="onChange">
       <span slot="action" slot-scope="row">
         <a-button @click="addEdit(row.id)">编辑</a-button>
@@ -150,13 +149,17 @@ export default {
       }
     },
     remove (ids) {
-      const params = {
-        ids: ids.join(',')
+      if (this.selectedRowKeys.length > 0) {
+        const params = {
+          ids: ids.join(',')
+        }
+        deleteList(params).then(res => {
+          this.$message.success('删除成功')
+          this.refresh()
+        })
+      }else {
+        this.$message.info('请先勾选要删除的数据')
       }
-      deleteList(params).then(res => {
-        this.$message.success('删除成功')
-        this.refresh()
-      })
     },
     addEditClose (success) {
       this.addEditVisible = false
