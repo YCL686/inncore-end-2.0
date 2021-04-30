@@ -109,8 +109,8 @@ export default {
       })
     },
     refresh () {
-      this.pagination.current = 1
-      this.filters = {}
+      // this.pagination.current = 1
+      // this.filters = {}
       this.fetch()
     },
     onChange (pagination, filters, sorter, currentDataSource) {
@@ -121,7 +121,7 @@ export default {
         this.sorter.field = ''
       }
       this.sorter.order = sorter.order === 'ascend'
-      this.filters = filters
+      this.filters = this.form
       this.fetch()
     },
     onSelectChange (selectedRowKeys) {
