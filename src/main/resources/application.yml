@@ -1,7 +1,7 @@
 server:
   port: 8200
   servlet:
-    context-path: /user-center
+    context-path: /inncore
 spring:
   cloud:
     nacos:
@@ -13,6 +13,7 @@ spring:
       transport:
         dashboard: 182.92.5.78:8180
         port: 8719
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:${DATASOURCE_DBTYPE:mysql}://${DATASOURCE_HOST:47.110.32.181}:${DATASOURCE_PORT:3306}/microservices-usercenter?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=GMT%2B8
@@ -29,7 +30,7 @@ feign:
 
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.ymm.microservices.usercenter.entity
+  type-aliases-package: com.inncore.beta.entity
   global-config:
     db-config:
       logic-delete-value: 1
@@ -42,4 +43,4 @@ generator:
 logging:
   level:
     root: warn
-    com.ymm.microservices.usercenter: debug
+    com.inncore.beta: debug

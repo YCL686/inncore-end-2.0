@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ymm.microservices.usercenter.mapper.GeneratorConfigMapper">
+<mapper namespace="com.inncore.beta.mapper.GeneratorConfigMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.ymm.microservices.usercenter.entity.GeneratorConfig">
+    <resultMap id="BaseResultMap" type="com.inncore.beta.entity.GeneratorConfig">
         <id column="id" property="id"/>
         <result column="projectPath" property="projectPath"/>
         <result column="moduleName" property="moduleName"/>

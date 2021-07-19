@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org//dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ymm.microservices.usercenter.mapper.SysUserMapper">
-    <resultMap id="UserDTOMap" type="com.ymm.microservices.usercenter.dto.SysUserDTO">
+<mapper namespace="com.inncore.beta.mapper.SysUserMapper">
+    <resultMap id="UserDTOMap" type="com.inncore.beta.dto.SysUserDTO">
         <id column="id" property="id"/>
         <result column="username" property="username"/>
         <result column="password" property="password"/>
@@ -18,18 +18,18 @@
         <!--            <result column="sort" property="sort"/>-->
         <!--            <result column="parent_id" property="parentId"/>-->
         <!--        </association>-->
-        <collection property="roles" ofType="com.ymm.microservices.usercenter.entity.SysRole" column="id"
+        <collection property="roles" ofType="com.inncore.beta.entity.SysRole" column="id"
                     select="selectRoleByUserId">
         </collection>
     </resultMap>
 
-    <select id="selectRoleByUserId" resultType="com.ymm.microservices.usercenter.entity.SysRole">
+    <select id="selectRoleByUserId" resultType="com.inncore.beta.entity.SysRole">
         select sys_role.*
         from sys_role
         inner join sys_user_role on sys_role.id = sys_user_role.role_id and sys_user_role.user_id = #{id}
         where sys_role.deleted = 0 and sys_user_role.deleted = 0
     </select>
-    <select id="findPermissionListByUser" parameterType="com.ymm.microservices.usercenter.entity.SysUser" resultType="com.ymm.microservices.usercenter.entity.SysPermission">
+    <select id="findPermissionListByUser" parameterType="com.inncore.beta.entity.SysUser" resultType="com.inncore.beta.entity.SysPermission">
         select sys_permission.*
         from sys_permission
         inner join sys_role_permission on sys_permission.id = sys_role_permission.permission_id
@@ -38,7 +38,7 @@
         inner join sys_user on sys_user.id = sys_user_role.user_id
         where sys_user.username = #{username}
     </select>
-    <select id="findMenuListByUser" parameterType="com.ymm.microservices.usercenter.entity.SysUser" resultType="com.ymm.microservices.usercenter.entity.SysMenu">
+    <select id="findMenuListByUser" parameterType="com.inncore.beta.entity.SysUser" resultType="com.inncore.beta.entity.SysMenu">
         select distinct sys_route.*
         from sys_route
         inner join sys_role_menu on sys_route.id = sys_role_menu.menu_id

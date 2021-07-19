@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org//dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ymm.microservices.usercenter.mapper.SysPermissionMapper">
-    <resultMap id="SysPermissionMap" type="com.ymm.microservices.usercenter.dto.SysPermissionDTO">
+<mapper namespace="com.inncore.beta.mapper.SysPermissionMapper">
+    <resultMap id="SysPermissionMap" type="com.inncore.beta.dto.SysPermissionDTO">
         <id property="id" column="id"/>
         <result property="url" column="url"/>
-        <collection property="roles" column="id" ofType="com.ymm.microservices.usercenter.entity.SysRole"
+        <collection property="roles" column="id" ofType="com.inncore.beta.entity.SysRole"
                     select="selectRoleByPermissionId">
             <id property="id"/>
             <result property="roleName" column="role_name"/>
@@ -12,7 +12,7 @@
         </collection>
     </resultMap>
 
-    <select id="selectRoleByPermissionId" resultType="com.ymm.microservices.usercenter.entity.SysRole">
+    <select id="selectRoleByPermissionId" resultType="com.inncore.beta.entity.SysRole">
         select sys_role.*
         from sys_role
         inner join sys_role_permission on sys_role.id = sys_role_permission.role_id and
